@@ -79,6 +79,39 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
+// Infinite marquee reviews
+const slider = document.querySelector('.reviews-grid');
+if (slider) {
+  const track = document.createElement('div');
+  track.className = 'reviews-track';
+
+  const origCards = Array.from(slider.querySelectorAll('.r-card'));
+  origCards.forEach(c => {
+    c.classList.remove('reveal-up', 'reveal-right');
+    track.appendChild(c);
+  });
+  origCards.forEach(c => track.appendChild(c.cloneNode(true)));
+  slider.appendChild(track);
+
+  let x = 0;
+  let paused = false;
+  let halfW = 0;
+
+  track.addEventListener('mouseenter', () => { paused = true; });
+  track.addEventListener('mouseleave', () => { paused = false; });
+
+  function tick() {
+    if (!halfW) halfW = track.scrollWidth / 2;
+    if (!paused) {
+      x += 0.5;
+      if (x >= halfW) x -= halfW;
+      track.style.transform = `translateX(-${x}px)`;
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 // Contact form
 const form = document.getElementById('contactForm');
 const btn  = document.getElementById('submitBtn');

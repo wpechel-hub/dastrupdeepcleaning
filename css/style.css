@@ -1238,6 +1238,13 @@ input, select, textarea { font-family: inherit; }
 }
 
 @media (max-width: 768px) {
+  :root { --nav-h: 72px; }
+
+  .nav__logo-img  { height: 58px; }
+  .nav__logo-name,
+  .nav__logo-sub  { font-size: 13px; }
+  .nav__logo-text { padding-left: 8px; }
+
   .nav__menu {
     position: fixed;
     top: var(--nav-h);
@@ -1259,6 +1266,9 @@ input, select, textarea { font-family: inherit; }
   .nav__hamburger { display: flex; }
   .nav__menu li:last-child .btn { width: 100%; justify-content: center; }
 
+  .hero__sub      { font-size: 16px; margin-bottom: 28px; }
+  .hero__container { padding-top: calc(var(--nav-h) + 40px); padding-bottom: 60px; }
+
   .services-grid    { grid-template-columns: repeat(2, 1fr); }
   .reviews-grid     { grid-template-columns: 1fr; }
   .stats__row       { grid-template-columns: 1fr 1fr; gap: 0; }
@@ -1268,10 +1278,26 @@ input, select, textarea { font-family: inherit; }
   .cta-band__btns   { justify-content: center; }
   .form-row         { grid-template-columns: 1fr; }
   .footer__grid     { grid-template-columns: 1fr; gap: 32px; }
-  .section-sub      { text-align: left; margin-left: 0; }
+  .section-sub      { font-size: 15px; text-align: center; margin-left: 0; margin-bottom: 40px; }
+  .reviews          { padding: 72px 0; }
+  .page-header      { padding: calc(var(--nav-h) + 48px) 0 48px; }
 }
 
 @media (max-width: 480px) {
+  :root { --nav-h: 66px; }
+
+  .nav__logo-img  { height: 50px; }
+  .nav__logo-name,
+  .nav__logo-sub  { font-size: 12px; letter-spacing: 0.05em; }
+
+  .hero__h1       { font-size: clamp(32px, 9vw, 44px); }
+  .hero__sub      { font-size: 15px; }
+  .hero__container { padding-top: calc(var(--nav-h) + 32px); }
+
+  .page-header h1 { font-size: clamp(28px, 8vw, 38px); }
+  .page-header p  { font-size: 15px; }
+  .page-header    { padding: calc(var(--nav-h) + 40px) 0 40px; }
+
   .services-grid    { grid-template-columns: 1fr; }
   .hero__ctas       { flex-direction: column; align-items: stretch; }
   .hero__ctas .btn  { justify-content: center; }
@@ -1279,4 +1305,7 @@ input, select, textarea { font-family: inherit; }
   .stat__div        { display: none; }
   .contact__form    { padding: 24px 18px; }
   .footer__bar-inner { justify-content: center; text-align: center; }
+  .section-h2       { font-size: clamp(26px, 7.5vw, 36px); }
+  .cta-band         { padding: 60px 0; }
+  .r-card           { flex: 0 0 280px; }
 }

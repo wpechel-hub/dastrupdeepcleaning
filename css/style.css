@@ -1231,6 +1231,23 @@ input, select, textarea { font-family: inherit; }
   margin-bottom: 16px;
 }
 .footer__social-row { display: flex; gap: 8px; margin-top: 12px; }
+.footer__social-link {
+  width: 36px; height: 36px;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+  transition: var(--t);
+}
+.footer__social-link:hover {
+  background: rgba(14,165,233,.12);
+  border-color: rgba(14,165,233,.25);
+  color: var(--accent-light);
+  transform: translateY(-2px);
+}
 
 .footer__col h4 {
   font-size: 11px;

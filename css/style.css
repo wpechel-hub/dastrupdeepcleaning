@@ -1306,6 +1306,13 @@ input, select, textarea { font-family: inherit; }
   margin: 0 auto;
   line-height: 1.7;
 }
+.page-header__btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 32px;
+}
 
 /* Active nav link */
 .nav__link--active { color: var(--text) !important; }
@@ -1334,6 +1341,8 @@ input, select, textarea { font-family: inherit; }
 
 @media (max-width: 768px) {
   :root { --nav-h: 72px; }
+
+  .container { padding: 0 24px; }
 
   .nav__logo-img  { height: 58px; }
   .nav__logo-name,
@@ -1364,22 +1373,35 @@ input, select, textarea { font-family: inherit; }
   .hero__sub      { font-size: 16px; margin-bottom: 28px; }
   .hero__container { padding-top: calc(var(--nav-h) + 40px); padding-bottom: 60px; }
 
+  .section-label  { justify-content: center; }
+  .section-h2     { text-align: center; }
+  .section-sub    { font-size: 15px; text-align: center; margin-left: 0; margin-bottom: 40px; }
+
   .services-grid    { grid-template-columns: repeat(2, 1fr); }
   .reviews-grid     { grid-template-columns: 1fr; }
   .stats__row       { grid-template-columns: 1fr 1fr; gap: 0; }
   .stat__div:nth-child(4) { display: none; }
   .stat             { padding: 24px 16px; }
+  .cta-band         { padding: 64px 0; }
   .cta-band__inner  { flex-direction: column; text-align: center; }
-  .cta-band__btns   { justify-content: center; }
+  .cta-band__btns   { justify-content: center; flex-wrap: wrap; }
   .form-row         { grid-template-columns: 1fr; }
-  .footer__grid     { grid-template-columns: 1fr; gap: 32px; }
-  .section-sub      { font-size: 15px; text-align: center; margin-left: 0; margin-bottom: 40px; }
+  .footer__grid     { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer__brand    { grid-column: 1 / -1; }
   .reviews          { padding: 72px 0; }
   .page-header      { padding: calc(var(--nav-h) + 48px) 0 48px; }
+  .page-header__btns { gap: 10px; margin-top: 24px; }
+  .page-header__btns .btn { flex: 1 1 auto; justify-content: center; min-width: 180px; }
+  .contact__info    { padding: 20px; }
+  .contact__hours   { padding: 16px 20px; }
+  .s-card           { padding: 22px 20px; }
+  .hero__trust      { flex-wrap: wrap; gap: 10px; }
 }
 
 @media (max-width: 480px) {
   :root { --nav-h: 66px; }
+
+  .container { padding: 0 16px; }
 
   .nav__logo-img  { height: 50px; }
   .nav__logo-name,
@@ -1389,18 +1411,29 @@ input, select, textarea { font-family: inherit; }
   .hero__sub      { font-size: 15px; }
   .hero__container { padding-top: calc(var(--nav-h) + 32px); }
 
-  .page-header h1 { font-size: clamp(28px, 8vw, 38px); }
+  .page-header h1 { font-size: clamp(26px, 8vw, 36px); }
   .page-header p  { font-size: 15px; }
   .page-header    { padding: calc(var(--nav-h) + 40px) 0 40px; }
+  .page-header__btns { flex-direction: column; align-items: stretch; }
+  .page-header__btns .btn { min-width: unset; text-align: center; justify-content: center; }
 
   .services-grid    { grid-template-columns: 1fr; }
+  .footer__grid     { grid-template-columns: 1fr; }
+  .footer__brand    { grid-column: unset; }
   .hero__ctas       { flex-direction: column; align-items: stretch; }
   .hero__ctas .btn  { justify-content: center; }
   .stats__row       { grid-template-columns: 1fr; }
   .stat__div        { display: none; }
-  .contact__form    { padding: 24px 18px; }
-  .footer__bar-inner { justify-content: center; text-align: center; }
-  .section-h2       { font-size: clamp(26px, 7.5vw, 36px); }
-  .cta-band         { padding: 60px 0; }
-  .r-card           { flex: 0 0 280px; }
+  .contact__form    { padding: 20px 16px; }
+  .contact__info    { padding: 18px 16px; }
+  .contact__hours   { padding: 14px 16px; }
+  .footer__bar-inner { flex-direction: column; justify-content: center; text-align: center; gap: 4px; }
+  .section-h2       { font-size: clamp(24px, 7.5vw, 34px); }
+  .cta-band         { padding: 56px 0; }
+  .cta-band__btns   { flex-direction: column; align-items: stretch; }
+  .cta-band__btns .btn { justify-content: center; }
+  .r-card           { flex: 0 0 260px; }
+  .s-card           { padding: 20px 16px; }
+  .step             { padding: 0 8px; }
+  .partners         { padding: 28px 0; }
 }

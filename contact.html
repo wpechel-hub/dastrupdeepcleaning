@@ -54,7 +54,9 @@
         <div class="contact__grid">
 
           <!-- FORM -->
-          <form class="contact__form reveal-up" id="contactForm" name="contact" netlify novalidate>
+          <form class="contact__form reveal-up" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+            <input type="hidden" name="access_key" value="7c86998d-cd97-4ceb-a5cf-6af0496fd5bd">
+            <input type="hidden" name="subject" value="New Quote Request — Dastrup Deep Cleaning">
             <div class="form-row">
               <div class="form-group">
                 <label for="firstName">First Name</label>

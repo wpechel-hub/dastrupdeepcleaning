@@ -116,20 +116,37 @@ if (slider) {
 const form = document.getElementById('contactForm');
 const btn  = document.getElementById('submitBtn');
 if (form && btn) {
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     btn.disabled = true;
-    btn.innerHTML = `
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
-      Sent! We'll be in touch soon.
-    `;
-    btn.style.background = '#10B981';
-    btn.style.borderColor = '#10B981';
-    setTimeout(() => {
+    btn.innerHTML = `Sending…`;
+
+    const data = new FormData(form);
+    const res  = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: data
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      btn.innerHTML = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m4.5 12.75 6 6 9-13.5"/></svg> Sent! We'll be in touch soon.`;
+      btn.style.background = '#10B981';
+      btn.style.borderColor = '#10B981';
       form.reset();
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.style.background = btn.style.borderColor = '';
+        btn.innerHTML = `Send My Request <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>`;
+      }, 4000);
+    } else {
+      btn.innerHTML = `Error — please try again`;
+      btn.style.background = '#EF4444';
+      btn.style.borderColor = '#EF4444';
       btn.disabled = false;
-      btn.style.background = btn.style.borderColor = '';
-      btn.innerHTML = `Send My Request <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>`;
-    }, 4000);
+      setTimeout(() => {
+        btn.style.background = btn.style.borderColor = '';
+        btn.innerHTML = `Send My Request <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>`;
+      }, 3000);
+    }
   });
 }

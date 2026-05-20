@@ -79,6 +79,25 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
+// Infinite marquee partners
+const partnersTrack = document.querySelector('.partners__track');
+if (partnersTrack) {
+  const logos = Array.from(partnersTrack.querySelectorAll('.partners__logo'));
+  logos.forEach(l => partnersTrack.appendChild(l.cloneNode(true)));
+
+  let px = 0;
+  let halfPW = 0;
+
+  function tickP() {
+    if (!halfPW) halfPW = partnersTrack.scrollWidth / 2;
+    px += 0.4;
+    if (px >= halfPW) px -= halfPW;
+    partnersTrack.style.transform = `translateX(-${px}px)`;
+    requestAnimationFrame(tickP);
+  }
+  requestAnimationFrame(tickP);
+}
+
 // Infinite marquee reviews
 const slider = document.querySelector('.reviews-grid');
 if (slider) {

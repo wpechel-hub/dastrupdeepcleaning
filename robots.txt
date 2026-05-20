@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.dastrupdeepcleaning.com/sitemap.xml

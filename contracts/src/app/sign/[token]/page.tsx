@@ -84,6 +84,64 @@ export default async function SignPage({
           <ContractBody f={fields} />
         </div>
 
+        <div className="px-8 pb-6">
+          <h3 className="text-[#1B4B7A] font-semibold text-sm border-b border-[#1B4B7A] pb-1 mb-4">
+            Billing Contact Information
+          </h3>
+          {contract.status === "SIGNED" ? (
+            <div className="grid sm:grid-cols-3 gap-4 text-sm">
+              <div>
+                <p className="text-xs text-[#5a6472]">Billing Contact</p>
+                <p className="font-semibold text-[#1a1a1a]">{contract.billingContact}</p>
+              </div>
+              <div>
+                <p className="text-xs text-[#5a6472]">Billing Email</p>
+                <p className="font-semibold text-[#1a1a1a]">{contract.billingEmail}</p>
+              </div>
+              <div>
+                <p className="text-xs text-[#5a6472]">Billing Phone</p>
+                <p className="font-semibold text-[#1a1a1a]">{contract.billingPhone}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-[#5a6472] mb-1">Billing Contact *</label>
+                <input
+                  type="text"
+                  name="billingContact"
+                  form="sign-form"
+                  required
+                  defaultValue={contract.client.name}
+                  className="w-full border border-[#e2e6ec] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6BA6]/30 focus:border-[#2E6BA6]"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-[#5a6472] mb-1">Billing Email *</label>
+                <input
+                  type="email"
+                  name="billingEmail"
+                  form="sign-form"
+                  required
+                  defaultValue={contract.client.email || ""}
+                  className="w-full border border-[#e2e6ec] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6BA6]/30 focus:border-[#2E6BA6]"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-[#5a6472] mb-1">Billing Phone *</label>
+                <input
+                  type="text"
+                  name="billingPhone"
+                  form="sign-form"
+                  required
+                  defaultValue={contract.client.phone || ""}
+                  className="w-full border border-[#e2e6ec] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6BA6]/30 focus:border-[#2E6BA6]"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+
         <div className="px-8 pb-8">
           <h3 className="text-[#5a6472] font-semibold text-xs uppercase tracking-wide mb-4">Accepted:</h3>
 
@@ -122,10 +180,11 @@ export default async function SignPage({
               <p className="text-xs text-emerald-600 mt-2">A copy of this signed agreement is on file with Dastrup Deep Cleaning.</p>
             </div>
           ) : (
-            <form action={boundSign} className="no-print mt-6 border-t border-[#e2e6ec] pt-6 space-y-4">
+            <form id="sign-form" action={boundSign} className="no-print mt-6 border-t border-[#e2e6ec] pt-6 space-y-4">
               {error && (
                 <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
-                  Please type your full name and check the agreement box before submitting.
+                  Please fill in the billing contact information above, type your full name, and check the
+                  agreement box before submitting.
                 </div>
               )}
 

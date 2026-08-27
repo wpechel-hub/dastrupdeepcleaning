@@ -10,19 +10,28 @@ function genDocNumber() {
   return `DDC-${year}-${rand}`;
 }
 
+function joinServiceAddress(formData: FormData) {
+  const street = String(formData.get("serviceStreet") || "").trim();
+  const unit = String(formData.get("serviceUnit") || "").trim();
+  const city = String(formData.get("serviceCity") || "").trim();
+  const state = String(formData.get("serviceState") || "").trim();
+  const zip = String(formData.get("serviceZip") || "").trim();
+
+  const line1 = [street, unit].filter(Boolean).join(" ");
+  const line2 = [city, state].filter(Boolean).join(", ") + (zip ? ` ${zip}` : "");
+  return [line1, line2.trim()].filter(Boolean).join(", ");
+}
+
 export async function createContractAction(formData: FormData) {
   const existingClientId = String(formData.get("clientId") || "").trim();
   const clientName = String(formData.get("clientName") || "").trim();
   const clientEmail = String(formData.get("clientEmail") || "").trim();
   const clientPhone = String(formData.get("clientPhone") || "").trim();
-  const serviceAddress = String(formData.get("serviceAddress") || "").trim();
+  const serviceAddress = joinServiceAddress(formData);
   const serviceType = String(formData.get("serviceType") || "").trim();
   const frequency = String(formData.get("frequency") || "").trim();
   const startDateRaw = String(formData.get("startDate") || "").trim();
   const rate = String(formData.get("rate") || "").trim();
-  const billingContact = String(formData.get("billingContact") || "").trim();
-  const billingEmail = String(formData.get("billingEmail") || "").trim();
-  const billingPhone = String(formData.get("billingPhone") || "").trim();
   const content = String(formData.get("content") || "").trim();
 
   if ((!existingClientId && !clientName) || !serviceAddress || !serviceType || !frequency || !rate || !content) {
@@ -49,9 +58,6 @@ export async function createContractAction(formData: FormData) {
       startDate: startDateRaw,
       rate,
       serviceAddress,
-      billingContact: billingContact || null,
-      billingEmail: billingEmail || null,
-      billingPhone: billingPhone || null,
       content,
     },
   });

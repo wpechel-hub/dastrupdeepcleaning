@@ -37,7 +37,7 @@ model Client {
 model Contract {
   id            String    @id @default(cuid())
   clientId      String
-  client        Client    @relation(fields: [clientId], references: [id])
+  client        Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
   token         String    @unique @default(cuid())
   docNumber     String    @unique
 

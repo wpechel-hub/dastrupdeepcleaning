@@ -9,6 +9,9 @@ const COMPANY_EMAIL = "dastrupdeepcleaning@gmail.com";
 
 export async function signContractAction(token: string, formData: FormData) {
   const signerName = String(formData.get("signerName") || "").trim();
+  const billingContact = String(formData.get("billingContact") || "").trim();
+  const billingEmail = String(formData.get("billingEmail") || "").trim();
+  const billingPhone = String(formData.get("billingPhone") || "").trim();
   const agree = formData.get("agree");
 
   const contract = await prisma.contract.findUnique({ where: { token }, include: { client: true } });
@@ -16,7 +19,7 @@ export async function signContractAction(token: string, formData: FormData) {
     redirect(`/sign/${token}`);
   }
 
-  if (!signerName || !agree) {
+  if (!signerName || !agree || !billingContact || !billingEmail || !billingPhone) {
     redirect(`/sign/${token}?error=1`);
   }
 
@@ -31,6 +34,9 @@ export async function signContractAction(token: string, formData: FormData) {
       signerName,
       signedAt,
       signedIp: ip,
+      billingContact,
+      billingEmail,
+      billingPhone,
     },
   });
 

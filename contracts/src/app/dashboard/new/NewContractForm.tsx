@@ -20,12 +20,6 @@ type ExistingClient = {
 const inputClass =
   "w-full border border-[#e2e6ec] rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#2E6BA6]/30 focus:border-[#2E6BA6]";
 
-function joinAddress(c: ExistingClient) {
-  if (!c) return "";
-  const line2 = [c.city, c.state].filter(Boolean).join(", ") + (c.zip ? ` ${c.zip}` : "");
-  return [c.street, c.unit].filter(Boolean).join(" ") + (line2.trim() ? `, ${line2}` : "");
-}
-
 function fmtDate(iso: string) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
   const [y, m, d] = iso.split("-").map(Number);
@@ -42,9 +36,6 @@ export default function NewContractForm({
   const [frequency, setFrequency] = useState("");
   const [startDate, setStartDate] = useState("");
   const [rate, setRate] = useState("");
-  const [billingContact, setBillingContact] = useState(existingClient?.name || "");
-  const [billingEmail, setBillingEmail] = useState(existingClient?.email || "");
-  const [billingPhone, setBillingPhone] = useState(existingClient?.phone || "");
   const [content, setContent] = useState("");
 
   function handleGenerate() {
@@ -53,9 +44,6 @@ export default function NewContractForm({
         frequency: frequency || "[Frequency]",
         startDate: startDate ? fmtDate(startDate) : "",
         rate: rate || "[Monthly Fee]",
-        billingContact: billingContact || "[Billing Contact]",
-        billingEmail: billingEmail || "[Billing Email]",
-        billingPhone: billingPhone || "[Billing Phone]",
       })
     );
   }
@@ -85,12 +73,7 @@ export default function NewContractForm({
           </div>
           <div>
             <label className="block text-xs font-semibold text-[#5a6472] mb-1">Client Phone</label>
-            <input
-              type="text"
-              name="clientPhone"
-              className={inputClass}
-              onChange={(e) => setBillingPhone((p) => p || e.target.value)}
-            />
+            <input type="text" name="clientPhone" className={inputClass} />
           </div>
         </div>
       )}
@@ -100,25 +83,28 @@ export default function NewContractForm({
           <label className="block text-xs font-semibold text-[#5a6472] mb-1">
             Client Email <span className="font-normal">(required to send the sign link automatically)</span>
           </label>
-          <input
-            type="email"
-            name="clientEmail"
-            className={inputClass}
-            onChange={(e) => setBillingEmail((p) => p || e.target.value)}
-          />
+          <input type="email" name="clientEmail" className={inputClass} />
         </div>
       )}
 
       <div>
         <label className="block text-xs font-semibold text-[#5a6472] mb-1">Service Address *</label>
-        <input
-          type="text"
-          name="serviceAddress"
-          required
-          defaultValue={joinAddress(existingClient)}
-          placeholder="Street, City, State ZIP"
-          className={inputClass}
-        />
+        <div className="grid grid-cols-3 gap-4">
+          <input
+            type="text"
+            name="serviceStreet"
+            required
+            defaultValue={existingClient?.street || ""}
+            placeholder="Street"
+            className={`${inputClass} col-span-2`}
+          />
+          <input type="text" name="serviceUnit" defaultValue={existingClient?.unit || ""} placeholder="Unit / Suite" className={inputClass} />
+        </div>
+        <div className="grid grid-cols-3 gap-4 mt-3">
+          <input type="text" name="serviceCity" required defaultValue={existingClient?.city || ""} placeholder="City" className={inputClass} />
+          <input type="text" name="serviceState" required defaultValue={existingClient?.state || ""} placeholder="State" className={inputClass} />
+          <input type="text" name="serviceZip" required defaultValue={existingClient?.zip || ""} placeholder="ZIP" className={inputClass} />
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -150,15 +136,6 @@ export default function NewContractForm({
         <div>
           <label className="block text-xs font-semibold text-[#5a6472] mb-1">Monthly Fee *</label>
           <input type="text" name="rate" required placeholder="e.g. $3,240.00" className={inputClass} value={rate} onChange={(e) => setRate(e.target.value)} />
-        </div>
-      </div>
-
-      <div className="border-t border-[#e2e6ec] pt-4">
-        <p className="text-xs font-semibold text-[#5a6472] mb-3">Billing contact</p>
-        <div className="grid grid-cols-3 gap-4">
-          <input type="text" name="billingContact" placeholder="Billing Contact" className={inputClass} value={billingContact} onChange={(e) => setBillingContact(e.target.value)} />
-          <input type="email" name="billingEmail" placeholder="Billing Email" className={inputClass} value={billingEmail} onChange={(e) => setBillingEmail(e.target.value)} />
-          <input type="text" name="billingPhone" placeholder="Billing Phone" className={inputClass} value={billingPhone} onChange={(e) => setBillingPhone(e.target.value)} />
         </div>
       </div>
 

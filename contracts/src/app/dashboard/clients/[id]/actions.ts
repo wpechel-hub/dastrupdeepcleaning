@@ -35,3 +35,10 @@ export async function deleteContractAction(contractId: string, clientId: string)
   await prisma.contract.delete({ where: { id: contractId } });
   revalidatePath(`/dashboard/clients/${clientId}`);
 }
+
+export async function deleteClientAction(clientId: string) {
+  // Cascades to delete all of this client's contracts too (onDelete: Cascade).
+  await prisma.client.delete({ where: { id: clientId } });
+  revalidatePath("/dashboard/clients");
+  redirect("/dashboard/clients");
+}

@@ -2,9 +2,6 @@ export type ContractClauseFields = {
   frequency: string;
   startDate: string;
   rate: string;
-  billingContact: string;
-  billingEmail: string;
-  billingPhone: string;
 };
 
 /**
@@ -29,7 +26,7 @@ export function buildDefaultClauses(f: ContractClauseFields): string {
 
 5. Company will invoice at the beginning of each month for that month's services, and payments are due by the 5th day of the following month. Payments not received by the 10th day of the month in which such payment is due are considered delinquent and shall be subject to late fees for each 30-day period of delinquency until the account is paid in full. Company may suspend services pending receipt of late payments, without liability. Monthly Fee charges exclude any use tax; tax on sales, services, or supplies; or any other such tax, which are payable by Client. Client agrees to reimburse Company for any taxes paid by Company on Client's behalf. Company will remit amounts due the franchised business according to the applicable agreement.
 
-   Invoices for services should be sent to — Billing Contact: ${f.billingContact}   Billing Email: ${f.billingEmail}   Phone: ${f.billingPhone}
+   Invoices for services will be sent to the billing contact provided by Client below.
 
 6. Services are not provided on New Year's Day, President's Day, Memorial Day, Independence Day, Labor Day, Thanksgiving Day, and Christmas Day, unless separate arrangements are made in advance for an additional charge. Monthly Fees are not pro-rated nor reduced for non-performance of services on these days.
 

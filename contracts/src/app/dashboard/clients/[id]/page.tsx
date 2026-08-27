@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { updateClientAction, deleteContractAction } from "./actions";
+import { updateClientAction, deleteContractAction, deleteClientAction } from "./actions";
+import DeleteClientButton from "./DeleteClientButton";
 
 function statusBadge(status: string) {
   const map: Record<string, string> = {
@@ -37,13 +38,21 @@ export default async function ClientDetailPage({
     await updateClientAction(id, formData);
   };
 
+  const boundDeleteClient = async () => {
+    "use server";
+    await deleteClientAction(id);
+  };
+
   return (
     <div className="max-w-3xl">
       <Link href="/dashboard/clients" className="text-xs text-[#1B4B7A] hover:underline">
         ← All Clients
       </Link>
 
-      <h1 className="text-xl font-semibold text-[#1b1f27] mt-3 mb-6">{client.name || "New Client"}</h1>
+      <div className="flex items-center justify-between mt-3 mb-6">
+        <h1 className="text-xl font-semibold text-[#1b1f27]">{client.name || "New Client"}</h1>
+        <DeleteClientButton clientName={client.name} onDelete={boundDeleteClient} />
+      </div>
 
       {saved && (
         <div className="mb-4 text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2">

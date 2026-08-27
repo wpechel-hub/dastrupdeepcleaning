@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+:root {
+  --background: #eef1f5;
+  --foreground: #1b1f27;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* This is an internal staff/client tool, not the public marketing site —
+   keep it a fixed light theme regardless of system dark-mode preference. */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.prose-contract h3 {
+  color: #1B4B7A;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-bottom: 1px solid #1B4B7A;
+  padding-bottom: 4px;
+  margin: 22px 0 8px;
+}
+.prose-contract p {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+}
+.prose-contract ul {
+  margin: 0 0 12px;
+  padding-left: 20px;
+  list-style: disc;
+}
+.prose-contract li {
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}

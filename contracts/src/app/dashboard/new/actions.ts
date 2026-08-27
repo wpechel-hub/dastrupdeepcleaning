@@ -10,13 +10,8 @@ function genDocNumber() {
   return `DDC-${year}-${rand}`;
 }
 
-function formatDate(iso: string) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
-  const [y, m, d] = iso.split("-").map(Number);
-  return new Date(y, m - 1, d).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-}
-
 export async function createContractAction(formData: FormData) {
+  const existingClientId = String(formData.get("clientId") || "").trim();
   const clientName = String(formData.get("clientName") || "").trim();
   const clientEmail = String(formData.get("clientEmail") || "").trim();
   const clientPhone = String(formData.get("clientPhone") || "").trim();
@@ -28,19 +23,22 @@ export async function createContractAction(formData: FormData) {
   const billingContact = String(formData.get("billingContact") || "").trim();
   const billingEmail = String(formData.get("billingEmail") || "").trim();
   const billingPhone = String(formData.get("billingPhone") || "").trim();
+  const content = String(formData.get("content") || "").trim();
 
-  if (!clientName || !serviceAddress || !serviceType || !frequency || !rate) {
-    redirect("/dashboard/new?error=1");
+  if ((!existingClientId && !clientName) || !serviceAddress || !serviceType || !frequency || !rate || !content) {
+    const back = existingClientId ? `/dashboard/new?clientId=${existingClientId}&error=1` : "/dashboard/new?error=1";
+    redirect(back);
   }
 
-  const client = await prisma.client.create({
-    data: {
-      name: clientName,
-      email: clientEmail || null,
-      phone: clientPhone || null,
-      address: serviceAddress,
-    },
-  });
+  const client = existingClientId
+    ? await prisma.client.findUniqueOrThrow({ where: { id: existingClientId } })
+    : await prisma.client.create({
+        data: {
+          name: clientName,
+          email: clientEmail || null,
+          phone: clientPhone || null,
+        },
+      });
 
   const contract = await prisma.contract.create({
     data: {
@@ -48,22 +46,24 @@ export async function createContractAction(formData: FormData) {
       docNumber: genDocNumber(),
       serviceType,
       frequency,
-      startDate: startDateRaw ? formatDate(startDateRaw) : "",
+      startDate: startDateRaw,
       rate,
       serviceAddress,
       billingContact: billingContact || null,
       billingEmail: billingEmail || null,
       billingPhone: billingPhone || null,
+      content,
     },
   });
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const signUrl = `${baseUrl}/sign/${contract.token}`;
+  const emailTo = clientEmail || client.email;
 
-  if (clientEmail) {
+  if (emailTo) {
     await sendContractEmail({
-      to: clientEmail,
-      clientName,
+      to: emailTo,
+      clientName: client.name,
       signUrl,
       docNumber: contract.docNumber,
     });

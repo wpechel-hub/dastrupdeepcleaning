@@ -72,3 +72,8 @@ body {
   font-size: 0.9rem;
   margin-bottom: 6px;
 }
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff !important; }
+}

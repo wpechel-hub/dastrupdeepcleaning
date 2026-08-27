@@ -18,10 +18,17 @@ model User {
 
 model Client {
   id        String     @id @default(cuid())
-  name      String
+  firstName String     @default("")
+  lastName  String     @default("")
+  name      String // "Name on Invoice" — defaults to "firstName lastName", editable
   email     String?
   phone     String?
-  address   String?
+  street    String?
+  unit      String?
+  city      String?
+  state     String?
+  zip       String?
+  notes     String?    @db.Text
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   contracts Contract[]
@@ -43,6 +50,8 @@ model Contract {
   billingContact String?
   billingEmail   String?
   billingPhone   String?
+
+  content       String    @db.Text // editable agreement clauses (plain text)
 
   status        String    @default("SENT") // SENT | SIGNED | VOID
   signerName    String?

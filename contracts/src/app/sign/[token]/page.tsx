@@ -3,16 +3,17 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { ContractBody } from "@/lib/contract-text";
 import { signContractAction } from "./actions";
+import AutoPrint from "./AutoPrint";
 
 export default async function SignPage({
   params,
   searchParams,
 }: {
   params: Promise<{ token: string }>;
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; print?: string }>;
 }) {
   const { token } = await params;
-  const { error } = await searchParams;
+  const { error, print } = await searchParams;
 
   const contract = await prisma.contract.findUnique({
     where: { token },
@@ -24,12 +25,7 @@ export default async function SignPage({
   const fields = {
     clientName: contract.client.name,
     serviceAddress: contract.serviceAddress,
-    frequency: contract.frequency,
-    startDate: contract.startDate || "____________________",
-    rate: contract.rate,
-    billingContact: contract.billingContact || contract.client.name,
-    billingEmail: contract.billingEmail || contract.client.email || "",
-    billingPhone: contract.billingPhone || contract.client.phone || "",
+    content: contract.content,
   };
 
   const companyAcceptedDate = contract.sentAt.toLocaleDateString("en-US", {
@@ -45,19 +41,43 @@ export default async function SignPage({
 
   return (
     <div className="min-h-screen bg-[#eef1f5] py-10 px-4">
-      <div className="max-w-2xl mx-auto bg-white border border-[#e2e6ec] rounded-xl shadow-sm">
+      {print === "1" && <AutoPrint />}
+      <div className="max-w-2xl mx-auto">
+
+        {/* LETTERHEAD */}
+        <div className="flex items-start justify-between mb-1">
+          <div>
+            <Image
+              src="/dastrup-logo-color.png"
+              alt="Dastrup Deep Cleaning"
+              width={100}
+              height={81}
+              priority
+              className="h-10 w-auto object-contain mb-2"
+            />
+            <p className="font-bold text-[#1a1a1a] text-sm">Dastrup Deep Cleaning</p>
+            <p className="text-sm text-[#5a6472]">5975 Monaco Cir, Murray UT 84121</p>
+            <p className="text-sm text-[#5a6472]">(801) 207-9056</p>
+          </div>
+          <div className="text-right shrink-0">
+            <p className="text-sm">
+              <span className="text-amber-600 font-semibold">Doc No.</span>{" "}
+              <span className="text-[#1a1a1a]">{contract.docNumber}</span>
+            </p>
+            <p className="text-sm mt-1">
+              <span className="text-amber-600 font-semibold">Date</span>{" "}
+              <span className="text-[#1a1a1a]">{companyAcceptedDate}</span>
+            </p>
+          </div>
+        </div>
+        <p className="text-sm text-[#5a6472] mb-6">Service Agreement for {contract.client.name}</p>
+
+        <div className="bg-white border border-[#e2e6ec] rounded-xl shadow-sm">
+
         <div className="px-8 pt-8 pb-4 text-center border-b border-[#e2e6ec]">
-          <Image
-            src="/dastrup-logo-color.png"
-            alt="Dastrup Deep Cleaning"
-            width={140}
-            height={113}
-            priority
-            className="h-14 w-auto object-contain mx-auto mb-4"
-          />
           <h1 className="text-xl font-bold text-[#1a1a1a] tracking-tight">DASTRUP DEEP CLEANING: SERVICE AGREEMENT</h1>
           <div className="w-24 h-0.5 bg-amber-500 mx-auto mt-2" />
-          <p className="text-xs text-[#5a6472] mt-3">Agreement {contract.docNumber}</p>
+          <p className="text-xs text-[#5a6472] mt-3">Client: {contract.client.name}</p>
         </div>
 
         <div className="px-8 py-6">
@@ -102,7 +122,7 @@ export default async function SignPage({
               <p className="text-xs text-emerald-600 mt-2">A copy of this signed agreement is on file with Dastrup Deep Cleaning.</p>
             </div>
           ) : (
-            <form action={boundSign} className="mt-6 border-t border-[#e2e6ec] pt-6 space-y-4">
+            <form action={boundSign} className="no-print mt-6 border-t border-[#e2e6ec] pt-6 space-y-4">
               {error && (
                 <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
                   Please type your full name and check the agreement box before submitting.
@@ -142,7 +162,8 @@ export default async function SignPage({
         </div>
 
         <div className="text-center text-xs text-[#5a6472] border-t border-[#e2e6ec] py-4">
-          Dastrup Deep Cleaning · 5975 Monaco Cir, Murray UT 84121 · (801) 207-9056 · dastrupdeepcleaning@gmail.com
+          Thank you for choosing Dastrup Deep Cleaning.
+        </div>
         </div>
       </div>
     </div>

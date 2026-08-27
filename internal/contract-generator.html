@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contract Generator | Dastrup Internal</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../images/favicon.ico" sizes="any">
+<style>
+  :root {
+    --navy: #1B4B7A;
+    --navy-light: #2E6BA6;
+    --ink: #1b1f27;
+    --ink-2: #5a6472;
+    --line: #e2e6ec;
+    --bg: #eef1f5;
+    --panel: #ffffff;
+    --accent-bg: #f4f7fb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  header.tool-bar {
+    background: var(--navy);
+    color: #fff;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  header.tool-bar h1 {
+    font-size: 16px;
+    margin: 0;
+    font-weight: 600;
+  }
+  header.tool-bar span {
+    font-size: 12px;
+    opacity: .75;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 24px;
+    max-width: 1280px;
+    margin: 24px auto;
+    padding: 0 20px 60px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  /* FORM PANEL */
+  .form-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    position: sticky;
+    top: 20px;
+  }
+  .form-panel h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--navy);
+    margin: 0 0 14px;
+  }
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink-2);
+    margin-bottom: 5px;
+  }
+  .field input, .field select {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-family: inherit;
+    color: var(--ink);
+    background: #fff;
+  }
+  .field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--navy-light);
+    box-shadow: 0 0 0 3px rgba(46,107,166,.15);
+  }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+  .btn--primary { background: var(--navy); color: #fff; }
+  .btn--primary:hover { background: var(--navy-light); }
+  .btn--ghost { background: transparent; color: var(--ink-2); border: 1px solid var(--line); }
+  .btn--ghost:hover { background: var(--accent-bg); }
+
+  .hint {
+    font-size: 11.5px;
+    color: var(--ink-2);
+    margin-top: 16px;
+    line-height: 1.5;
+    background: var(--accent-bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+
+  /* PAPER / PREVIEW */
+  .paper-wrap {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 8px;
+  }
+  .paper {
+    background: #fff;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 56px 60px 50px;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #1a1a1a;
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+  .paper .co-header {
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 8px;
+    margin-bottom: 26px;
+    font-family: -apple-system, sans-serif;
+    font-size: 11px;
+    color: #666;
+  }
+  .paper .co-header strong { color: var(--navy); }
+  .paper h1.doc-title {
+    text-align: center;
+    color: var(--navy);
+    font-size: 30px;
+    margin: 0 0 4px;
+  }
+  .paper .tagline {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    font-size: 14px;
+    margin: 0 0 18px;
+  }
+  .paper h2.agreement-title {
+    text-align: center;
+    font-size: 17px;
+    letter-spacing: .02em;
+    margin: 0 0 22px;
+  }
+  .paper .client-line {
+    text-align: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 12px;
+    color: #666;
+    margin: -10px 0 22px;
+  }
+  .paper p { margin: 0 0 12px; }
+  .paper h3 {
+    color: var(--navy);
+    font-size: 13.5px;
+    letter-spacing: .01em;
+    border-bottom: 1px solid var(--navy);
+    padding-bottom: 4px;
+    margin: 22px 0 8px;
+  }
+  .paper ul { margin: 0 0 12px; padding-left: 20px; }
+  .paper li { margin-bottom: 5px; }
+  .paper .fill { color: var(--navy); font-weight: 700; font-family: -apple-system, sans-serif; }
+  .sig-block { margin-top: 26px; }
+  .sig-line {
+    border-bottom: 1px solid #333;
+    height: 26px;
+    margin-top: 14px;
+  }
+  .sig-label {
+    font-family: -apple-system, sans-serif;
+    font-size: 10.5px;
+    font-style: italic;
+    color: #777;
+    margin-top: 3px;
+  }
+  .paper .co-footer {
+    text-align: center;
+    border-top: 1px solid #ccc;
+    margin-top: 30px;
+    padding-top: 10px;
+    font-family: -apple-system, sans-serif;
+    font-size: 11px;
+    color: #666;
+  }
+  .paper .co-footer strong { display: block; color: var(--navy); font-size: 12px; margin-bottom: 2px; }
+
+  @media print {
+    header.tool-bar, .form-panel, .no-print { display: none !important; }
+    body, .layout, .paper-wrap { background: #fff !important; margin: 0; padding: 0; }
+    .layout { display: block; max-width: none; }
+    .paper-wrap { border: none; border-radius: 0; padding: 0; }
+    .paper { max-width: none; padding: 0.4in 0.6in; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="tool-bar">
+  <h1>Dastrup Deep Cleaning — Contract Generator</h1>
+  <span>Internal use only · not linked from the public site</span>
+</header>
+
+<div class="layout">
+
+  <div class="form-panel no-print">
+    <h2>Client &amp; Service Details</h2>
+
+    <div class="field">
+      <label for="clientName">Client Name</label>
+      <input type="text" id="clientName" placeholder="e.g. John &amp; Sarah Miller">
+    </div>
+
+    <div class="field">
+      <label for="serviceAddress">Service Address</label>
+      <input type="text" id="serviceAddress" placeholder="e.g. 123 Main St, Salt Lake City, UT">
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="clientPhone">Client Phone</label>
+        <input type="text" id="clientPhone" placeholder="(801) 555-0100">
+      </div>
+      <div class="field">
+        <label for="clientEmail">Client Email</label>
+        <input type="email" id="clientEmail" placeholder="client@email.com">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="serviceType">Service Type</label>
+      <select id="serviceType">
+        <option value="">Select a service…</option>
+        <option>Residential Cleaning</option>
+        <option>Deep Cleaning</option>
+        <option>Move In / Move Out Cleaning</option>
+        <option>Commercial Cleaning</option>
+        <option>Post-Construction Cleanup</option>
+        <option>Vacation Rental Cleaning</option>
+        <option>Sanitization Cleaning</option>
+        <option>Model Home Cleaning</option>
+        <option>Bank Cleaning Services</option>
+        <option>Auto Dealership Cleaning</option>
+        <option>School Cleaning</option>
+        <option>Gym Cleaning Services</option>
+        <option>Retail Store Cleaning</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="frequency">Frequency</label>
+        <select id="frequency">
+          <option value="">Select…</option>
+          <option>One-Time</option>
+          <option>Weekly</option>
+          <option>Bi-Weekly</option>
+          <option>Monthly</option>
+          <option>Custom Schedule</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="startDate">Start Date</label>
+        <input type="date" id="startDate">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="rate">Rate (per visit)</label>
+        <input type="text" id="rate" placeholder="e.g. $150">
+      </div>
+      <div class="field">
+        <label for="cancelFee">Cancellation Fee</label>
+        <input type="text" id="cancelFee" placeholder="e.g. $50" value="$50">
+      </div>
+    </div>
+
+    <button class="btn btn--primary" onclick="window.print()">
+      🖨️ Print / Save as PDF
+    </button>
+    <button class="btn btn--ghost" onclick="resetForm()">Clear Form</button>
+
+    <div class="hint">
+      Fill in the fields above, then click <strong>Print / Save as PDF</strong>. In the print dialog, choose
+      <strong>“Save as PDF”</strong> as the destination to get a file ready to attach to an email. Fields left
+      blank stay as bracketed placeholders (e.g. <em>[Client Name]</em>) so you can fill them in by hand instead if you prefer.
+      Your entries are only saved in this browser (not sent anywhere) so you can safely close and come back to a draft.
+    </div>
+  </div>
+
+  <div class="paper-wrap">
+    <div class="paper" id="paper">
+
+      <div class="co-header"><strong>Dastrup Deep Cleaning</strong> &nbsp;|&nbsp; Client Service Agreement</div>
+
+      <h1 class="doc-title">Dastrup Deep Cleaning</h1>
+      <p class="tagline">Utah's Trusted Cleaning Experts</p>
+      <h2 class="agreement-title">CLIENT SERVICE AGREEMENT</h2>
+      <p class="client-line" id="clientLine"></p>
+
+      <p>Thank you for the opportunity to work with you. At Dastrup Deep Cleaning, our mission is to give Utah
+      homeowners and businesses a cleaning service they can actually rely on. This Agreement is entered into
+      between Dastrup Deep Cleaning (&ldquo;Company&rdquo;) and <span class="fill" id="p_clientName">[Client Name]</span>
+      (&ldquo;Client&rdquo;) for cleaning services performed at <span class="fill" id="p_serviceAddress">[Service Address]</span>,
+      and outlines the terms under which those services will be provided.</p>
+
+      <h3>1. Services</h3>
+      <p>Dastrup Deep Cleaning provides residential and commercial cleaning services, including recurring
+      maintenance cleaning, deep cleaning, move in/move out cleaning, post-construction cleanup, and specialty
+      cleaning for spaces such as vacation rentals, model homes, offices, and other commercial facilities.</p>
+      <p>Scope of service for this engagement: <span class="fill" id="p_serviceType">[Service Type]</span> performed
+      on a <span class="fill" id="p_frequency">[Frequency]</span> basis, beginning
+      <span class="fill" id="p_startDate">[Start Date]</span>. Any change to this scope must be agreed upon in
+      writing by both parties.</p>
+
+      <h3>2. Fees and Payment</h3>
+      <ul>
+        <li>Cleaning services are billed at a rate of <span class="fill" id="p_rate">[Rate]</span> per visit, as quoted and agreed upon prior to the first appointment.</li>
+        <li>A valid credit card or payment method must be kept on file at the time of booking.</li>
+        <li>Payment is due in full on the day of service and may be made by cash, check, or credit/debit card. A 3% surcharge applies to payments made by credit card.</li>
+        <li>Any invoice left unpaid after 7 days will be automatically charged to the payment method on file.</li>
+        <li>Add-on services requested outside the agreed scope (e.g. inside oven, inside refrigerator, interior windows) will be quoted and billed separately, with the client's approval before work begins.</li>
+        <li>Recurring service pricing is based on the agreed-upon frequency. Skipped or infrequently rescheduled visits may result in a rate adjustment to reflect actual service frequency.</li>
+        <li>Travel beyond a reasonable distance from our standard service area may be subject to a travel fee, disclosed prior to booking.</li>
+      </ul>
+
+      <h3>3. Cancellation and Rescheduling Policy</h3>
+      <p>We kindly ask that clients provide at least 24 hours' notice to cancel or reschedule a scheduled cleaning.
+      Cancellations with less than 24 hours' notice will be billed a cancellation fee of
+      <span class="fill" id="p_cancelFee">[Cancellation Fee]</span>.</p>
+      <p>By signing this Agreement, the client confirms that they are authorized to enter into this contract on
+      behalf of themselves or the organization named below.</p>
+
+      <h3>4. Client Responsibilities and Property Access</h3>
+      <p>The client agrees to provide our team with safe and reasonable access to the property at the scheduled
+      service time (e.g. key, code, or on-site access). The client is responsible for securing pets and disclosing,
+      prior to service, any known hazards, fragile items, or areas requiring special care. Dastrup Deep Cleaning is
+      not responsible for delays, missed service, or additional charges resulting from denied or delayed access.</p>
+
+      <h3>5. Satisfaction Guarantee</h3>
+      <p>If any area cleaned does not meet the client's expectations, the client must notify Dastrup Deep Cleaning
+      within 24 hours of service. We will return to re-clean the area(s) in question at no additional charge. This
+      guarantee applies only to work within the agreed scope of service.</p>
+
+      <h3>6. Liability, Damages and Professional Conduct</h3>
+      <p>Dastrup Deep Cleaning is fully insured and bonded, and every team member is background-checked prior to
+      their first visit. In the unlikely event of damage caused directly by our team during a scheduled service,
+      the client must report it within 24 hours so it can be investigated and resolved. Dastrup Deep Cleaning is
+      not liable for pre-existing damage, normal wear and tear, or damage to improperly secured, fragile, or
+      high-value items not disclosed in advance. We hold all information seen or discussed while providing services
+      in the strictest confidence.</p>
+
+      <h3>7. License and Insurance</h3>
+      <p>Dastrup Deep Cleaning is licensed to operate in the state of Utah and carries liability insurance for the
+      protection of our clients and our team.</p>
+
+      <h3>8. Agreement</h3>
+      <p>IN WITNESS WHEREOF, the parties hereto have executed this Agreement as of the day and year written below.</p>
+
+      <div class="sig-block">
+        <div class="sig-line"></div>
+        <div class="sig-label">Client Signature</div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Print Name</div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Date</div>
+
+        <div class="sig-line" style="margin-top:22px;"></div>
+        <div class="sig-label">Dastrup Deep Cleaning — Authorized Signature</div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Date</div>
+      </div>
+
+      <div class="co-footer">
+        <strong>Dastrup Deep Cleaning</strong>
+        Utah, USA &middot; (801) 207-9056 &middot; dastrupdeepcleaning@gmail.com
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const STORAGE_KEY = "ddc_contract_draft";
+  const fieldIds = ["clientName","serviceAddress","clientPhone","clientEmail","serviceType","frequency","startDate","rate","cancelFee"];
+
+  function fmtDate(iso) {
+    if (!iso) return "";
+    const [y,m,d] = iso.split("-");
+    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    return `${months[parseInt(m,10)-1]} ${parseInt(d,10)}, ${y}`;
+  }
+
+  function render() {
+    const val = id => document.getElementById(id).value.trim();
+
+    const clientName = val("clientName");
+    const serviceAddress = val("serviceAddress");
+    const serviceType = val("serviceType");
+    const frequency = val("frequency");
+    const startDate = fmtDate(val("startDate"));
+    const rate = val("rate");
+    const cancelFee = val("cancelFee");
+    const phone = val("clientPhone");
+    const email = val("clientEmail");
+
+    document.getElementById("p_clientName").textContent = clientName || "[Client Name]";
+    document.getElementById("p_serviceAddress").textContent = serviceAddress || "[Service Address]";
+    document.getElementById("p_serviceType").textContent = serviceType || "[Service Type]";
+    document.getElementById("p_frequency").textContent = frequency ? frequency.toLowerCase() : "[Frequency]";
+    document.getElementById("p_startDate").textContent = startDate || "[Start Date]";
+    document.getElementById("p_rate").textContent = rate || "[Rate]";
+    document.getElementById("p_cancelFee").textContent = cancelFee || "[Cancellation Fee]";
+
+    const contactBits = [phone, email].filter(Boolean).join(" · ");
+    document.getElementById("clientLine").textContent = contactBits ? `Prepared for ${clientName || "client"} · ${contactBits}` : "";
+
+    try {
+      const draft = {};
+      fieldIds.forEach(id => draft[id] = document.getElementById(id).value);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+    } catch (e) { /* storage unavailable, ignore */ }
+  }
+
+  function resetForm() {
+    fieldIds.forEach(id => document.getElementById(id).value = "");
+    document.getElementById("cancelFee").value = "$50";
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    render();
+  }
+
+  function restore() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+      fieldIds.forEach(id => { if (draft[id] !== undefined) document.getElementById(id).value = draft[id]; });
+    } catch (e) { /* ignore */ }
+  }
+
+  fieldIds.forEach(id => {
+    document.getElementById(id).addEventListener("input", render);
+    document.getElementById(id).addEventListener("change", render);
+  });
+
+  restore();
+  render();
+</script>
+
+</body>
+</html>

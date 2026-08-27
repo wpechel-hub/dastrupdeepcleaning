@@ -38,8 +38,11 @@ model Contract {
   frequency     String
   startDate     String
   rate          String
-  cancelFee     String
   serviceAddress String
+
+  billingContact String?
+  billingEmail   String?
+  billingPhone   String?
 
   status        String    @default("SENT") // SENT | SIGNED | VOID
   signerName    String?

@@ -20,11 +20,11 @@ export default async function NewContractPage({
 
       <form action={createContractAction} className="bg-white border border-[#e2e6ec] rounded-xl p-6 space-y-4">
         <div className="grid grid-cols-2 gap-4">
-          <Field label="Client Name" name="clientName" required />
+          <Field label="Client Name" name="clientName" required placeholder="e.g. Arcadia Apartment Homes" />
           <Field label="Client Phone" name="clientPhone" />
         </div>
         <Field label="Client Email" name="clientEmail" type="email" hint="Required to send the sign link automatically." />
-        <Field label="Service Address" name="serviceAddress" required />
+        <Field label="Service Address" name="serviceAddress" required placeholder="Street, City, State ZIP" />
 
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -47,10 +47,20 @@ export default async function NewContractPage({
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
-          <Field label="Start Date" name="startDate" type="date" />
-          <Field label="Rate (per visit)" name="rate" placeholder="e.g. $150" required />
-          <Field label="Cancellation Fee" name="cancelFee" placeholder="$50" />
+        <div className="grid grid-cols-2 gap-4">
+          <Field label="Effective Date" name="startDate" type="date" />
+          <Field label="Monthly Fee" name="rate" placeholder="e.g. $3,240.00" required />
+        </div>
+
+        <div className="border-t border-[#e2e6ec] pt-4 mt-2">
+          <p className="text-xs font-semibold text-[#5a6472] mb-3">
+            Billing contact <span className="font-normal">(optional — defaults to the client name/email/phone above)</span>
+          </p>
+          <div className="grid grid-cols-3 gap-4">
+            <Field label="Billing Contact" name="billingContact" />
+            <Field label="Billing Email" name="billingEmail" type="email" />
+            <Field label="Billing Phone" name="billingPhone" />
+          </div>
         </div>
 
         <button

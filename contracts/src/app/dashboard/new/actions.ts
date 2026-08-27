@@ -10,6 +10,12 @@ function genDocNumber() {
   return `DDC-${year}-${rand}`;
 }
 
+function formatDate(iso: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+}
+
 export async function createContractAction(formData: FormData) {
   const clientName = String(formData.get("clientName") || "").trim();
   const clientEmail = String(formData.get("clientEmail") || "").trim();
@@ -17,9 +23,11 @@ export async function createContractAction(formData: FormData) {
   const serviceAddress = String(formData.get("serviceAddress") || "").trim();
   const serviceType = String(formData.get("serviceType") || "").trim();
   const frequency = String(formData.get("frequency") || "").trim();
-  const startDate = String(formData.get("startDate") || "").trim();
+  const startDateRaw = String(formData.get("startDate") || "").trim();
   const rate = String(formData.get("rate") || "").trim();
-  const cancelFee = String(formData.get("cancelFee") || "$50").trim();
+  const billingContact = String(formData.get("billingContact") || "").trim();
+  const billingEmail = String(formData.get("billingEmail") || "").trim();
+  const billingPhone = String(formData.get("billingPhone") || "").trim();
 
   if (!clientName || !serviceAddress || !serviceType || !frequency || !rate) {
     redirect("/dashboard/new?error=1");
@@ -40,10 +48,12 @@ export async function createContractAction(formData: FormData) {
       docNumber: genDocNumber(),
       serviceType,
       frequency,
-      startDate,
+      startDate: startDateRaw ? formatDate(startDateRaw) : "",
       rate,
-      cancelFee,
       serviceAddress,
+      billingContact: billingContact || null,
+      billingEmail: billingEmail || null,
+      billingPhone: billingPhone || null,
     },
   });
 

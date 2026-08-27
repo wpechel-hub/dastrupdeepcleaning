@@ -1,110 +1,113 @@
 type ContractFields = {
   clientName: string;
   serviceAddress: string;
-  serviceType: string;
   frequency: string;
   startDate: string;
   rate: string;
-  cancelFee: string;
+  billingContact: string;
+  billingEmail: string;
+  billingPhone: string;
 };
 
-/** Shared agreement body, used on the public /sign/[token] page (and reusable anywhere else). */
+/** Dastrup Deep Cleaning's real Service Agreement, parameterized per client. */
 export function ContractBody({ f }: { f: ContractFields }) {
   return (
     <div className="prose-contract text-[#1a1a1a] leading-relaxed">
       <p>
-        Thank you for the opportunity to work with you. At Dastrup Deep Cleaning, our mission is to give Utah
-        homeowners and businesses a cleaning service they can actually rely on. This Agreement is entered into
-        between Dastrup Deep Cleaning (&ldquo;Company&rdquo;) and{" "}
-        <strong className="text-[#1B4B7A]">{f.clientName}</strong> (&ldquo;Client&rdquo;) for cleaning services
-        performed at <strong className="text-[#1B4B7A]">{f.serviceAddress}</strong>, and outlines the terms under
-        which those services will be provided.
+        <strong className="text-[#1B4B7A]">{f.clientName}</strong> (&ldquo;Client&rdquo;) hereby accepts the
+        proposal of <strong>DASTRUP DEEP CLEANING</strong> (&ldquo;Company&rdquo;) for janitorial services
+        provided at the following address:
       </p>
 
-      <h3>1. Services</h3>
-      <p>
-        Dastrup Deep Cleaning provides residential and commercial cleaning services, including recurring
-        maintenance cleaning, deep cleaning, move in/move out cleaning, post-construction cleanup, and specialty
-        cleaning for spaces such as vacation rentals, model homes, offices, and other commercial facilities.
-      </p>
-      <p>
-        Scope of service for this engagement: <strong className="text-[#1B4B7A]">{f.serviceType}</strong>{" "}
-        performed on a <strong className="text-[#1B4B7A]">{f.frequency.toLowerCase()}</strong> basis, beginning{" "}
-        <strong className="text-[#1B4B7A]">{f.startDate}</strong>. Any change to this scope must be agreed upon in
-        writing by both parties.
-      </p>
+      <div className="text-center my-4">
+        <p className="font-bold uppercase m-0">{f.clientName}</p>
+        <p className="m-0">{f.serviceAddress}</p>
+        <p className="m-0">with the following terms:</p>
+      </div>
 
-      <h3>2. Fees and Payment</h3>
-      <ul>
+      <ol className="contract-clauses">
         <li>
-          Cleaning services are billed at a rate of <strong className="text-[#1B4B7A]">{f.rate}</strong> per visit,
-          as quoted and agreed upon prior to the first appointment.
-        </li>
-        <li>A valid credit card or payment method must be kept on file at the time of booking.</li>
-        <li>
-          Payment is due in full on the day of service and may be made by cash, check, or credit/debit card. A 3%
-          surcharge applies to payments made by credit card.
-        </li>
-        <li>Any invoice left unpaid after 7 days will be automatically charged to the payment method on file.</li>
-        <li>
-          Add-on services requested outside the agreed scope (e.g. inside oven, inside refrigerator, interior
-          windows) will be quoted and billed separately, with the client&apos;s approval before work begins.
+          Effective <strong className="text-[#1B4B7A]">{f.startDate}</strong>, Company will arrange for delivery
+          for the professional commercial cleaning services described on the preceding &ldquo;Service
+          Schedule&rdquo; <strong className="text-[#1B4B7A]">{f.frequency}</strong> at a monthly fee of:{" "}
+          <strong className="text-[#1B4B7A]">{f.rate}</strong>
+          <ul>
+            <li>
+              Any additional services not included within the prescribed Service Schedule are available upon
+              request at an additional charge. Additionally, Client may purchase consumable toiletry and other
+              supplies through Company. Please see attached pricing list.
+            </li>
+          </ul>
         </li>
         <li>
-          Recurring service pricing is based on the agreed-upon frequency. Skipped or infrequently rescheduled
-          visits may result in a rate adjustment to reflect actual service frequency.
+          Client accepts that the services provided under the Service Schedule/Scope-of-Work will be delegated by
+          Company to an independently-owned Dastrup Deep Cleaning (Service Provider), which will provide the
+          necessary labor and cleaning service related equipment and supplies at its own expense.
         </li>
         <li>
-          Travel beyond a reasonable distance from our standard service area may be subject to a travel fee,
-          disclosed prior to booking.
+          Client agrees to inform Company if dissatisfied with the Service Provider or its services. Additionally,
+          Client shall allow Company fair treatment and reasonable time to correct deficient services including
+          absenteeism, without punitive action. Client agrees to issue a thirty (30) day written probationary
+          notice to Company in which Company may cure unsatisfactory services.
         </li>
-      </ul>
-
-      <h3>3. Cancellation and Rescheduling Policy</h3>
-      <p>
-        We kindly ask that clients provide at least 24 hours&apos; notice to cancel or reschedule a scheduled
-        cleaning. Cancellations with less than 24 hours&apos; notice will be billed a cancellation fee of{" "}
-        <strong className="text-[#1B4B7A]">{f.cancelFee}</strong>.
-      </p>
-      <p>
-        By signing this Agreement, the client confirms that they are authorized to enter into this contract on
-        behalf of themselves or the organization named below.
-      </p>
-
-      <h3>4. Client Responsibilities and Property Access</h3>
-      <p>
-        The client agrees to provide our team with safe and reasonable access to the property at the scheduled
-        service time (e.g. key, code, or on-site access). The client is responsible for securing pets and
-        disclosing, prior to service, any known hazards, fragile items, or areas requiring special care. Dastrup
-        Deep Cleaning is not responsible for delays, missed service, or additional charges resulting from denied or
-        delayed access.
-      </p>
-
-      <h3>5. Satisfaction Guarantee</h3>
-      <p>
-        If any area cleaned does not meet the client&apos;s expectations, the client must notify Dastrup Deep
-        Cleaning within 24 hours of service. We will return to re-clean the area(s) in question at no additional
-        charge. This guarantee applies only to work within the agreed scope of service.
-      </p>
-
-      <h3>6. Liability, Damages and Professional Conduct</h3>
-      <p>
-        Dastrup Deep Cleaning is fully insured and bonded, and every team member is background-checked prior to
-        their first visit. In the unlikely event of damage caused directly by our team during a scheduled service,
-        the client must report it within 24 hours so it can be investigated and resolved. Dastrup Deep Cleaning is
-        not liable for pre-existing damage, normal wear and tear, or damage to improperly secured, fragile, or
-        high-value items not disclosed in advance. We hold all information seen or discussed while providing
-        services in the strictest confidence.
-      </p>
-
-      <h3>7. License and Insurance</h3>
-      <p>
-        Dastrup Deep Cleaning is licensed to operate in the state of Utah and carries liability insurance for the
-        protection of our clients and our team.
-      </p>
-
-      <h3>8. Agreement</h3>
-      <p>IN WITNESS WHEREOF, the parties hereto have executed this Agreement as of the day and year written below.</p>
+        <li>
+          The monthly fee amount specified above in Paragraph 1 is valid for one (1) year from the date of this
+          Agreement for the services specified within the Service Schedule/Scope-of-Work, and such is to be
+          delivered at the intervals provided as specified therein. Thereafter, Company may modify the monthly fee
+          upon providing a minimum of twenty (20) days advance written notice to Client of an impending adjustment.
+          Either Client or Company may terminate this Agreement by providing thirty (30) days advance written
+          notice of cancellation to the other party. Any other modifications to this Agreement must be executed
+          via Contract Amendment, signed by both Client and Company. This agreement automatically renews unless
+          Client or Company provides thirty (30) days advance written notice of cancellation during a period to
+          the other party.
+        </li>
+        <li>
+          Company will invoice at the beginning of each month for that month&apos;s services, and payments are due
+          by the 5th day of the following month. Payments not received by the 10th day of the month in which such
+          payment is due are considered delinquent and shall be subject to late fees for each 30-day period of
+          delinquency until the account is paid in full. Company may suspend services pending receipt of late
+          payments, without liability. Monthly Fee charges exclude any use tax; tax on sales, services, or
+          supplies; or any other such tax, which are payable by Client. Client agrees to reimburse Company for any
+          taxes paid by Company on Client&apos;s behalf. Company will remit amounts due the franchised business
+          according to the applicable agreement.
+          <p className="font-bold text-red-700 mt-2 mb-1">Invoices for services should be sent to:</p>
+          <div className="grid sm:grid-cols-3 gap-2 text-sm">
+            <div>
+              <span className="text-[#5a6472]">Billing Contact: </span>
+              <strong>{f.billingContact}</strong>
+            </div>
+            <div>
+              <span className="text-[#5a6472]">Billing Email: </span>
+              <strong>{f.billingEmail}</strong>
+            </div>
+            <div>
+              <span className="text-[#5a6472]">Phone: </span>
+              <strong>{f.billingPhone}</strong>
+            </div>
+          </div>
+        </li>
+        <li>
+          Services are not provided on New Year&apos;s Day, President&apos;s Day, Memorial Day, Independence Day,
+          Labor Day, Thanksgiving Day, and Christmas Day, unless separate arrangements are made in advance for an
+          additional charge. Monthly Fees are not pro-rated nor reduced for non-performance of services on these
+          days.
+        </li>
+        <li>
+          Client shall not hold Company responsible for missed services due to inclement weather, natural
+          disasters, major snowstorms, power outages or any other catastrophe beyond Company&apos;s control.
+        </li>
+        <li>
+          Client agrees that during the term of this agreement, and for a period of no less than two (2) years
+          from the effective date of its termination, Client will not hire nor employ any employees,
+          representatives, agents, franchisees, or subcontractors of Company to perform cleaning related services
+          for Client directly or indirectly.
+        </li>
+        <li>
+          Client will deliver to Company a signed copy of this Agreement and two (2) sets of facility keys for the
+          Service Provider&apos;s use, which will be returned to Client if this Agreement is cancelled. Client
+          understands that Service Provider cannot make an agreement on Company&apos;s behalf.
+        </li>
+      </ol>
     </div>
   );
 }

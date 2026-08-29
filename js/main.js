@@ -220,7 +220,16 @@ if (form && btn) {
     allGroupIds.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
-      el.hidden = id !== targetId;
+      const isActive = id === targetId;
+      el.hidden = !isActive;
+      // `hidden` alone isn't enough: browsers still count required fields
+      // inside a hidden group toward form validation (they're just not
+      // focusable), which silently blocks submission with no visible
+      // error. Disabling the fields excludes them from validation and
+      // from the submitted data.
+      el.querySelectorAll('input, select, textarea').forEach((field) => {
+        field.disabled = !isActive;
+      });
     });
   }
 

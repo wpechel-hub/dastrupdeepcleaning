@@ -39,53 +39,79 @@ export default async function LoginPage({
       </p>
 
       <div className="relative flex flex-col items-center animate-fade-in-up [animation-delay:120ms]">
-        <div className="w-full max-w-sm bg-[#0C1C34]/90 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-[0_0_60px_-12px_rgba(14,165,233,0.35)] ring-1 ring-white/5">
-          <h1
-            className={`${inter.className} text-3xl font-extrabold tracking-tight text-center mb-6 bg-gradient-to-r from-[#0EA5E9] to-[#38BDF8] bg-clip-text text-transparent`}
-          >
-            Portal
-          </h1>
+        <div className="relative w-full max-w-sm">
+          {/* Colorful glow directly behind the card, in the site's palette */}
+          <div className="absolute inset-4 -z-10 rounded-[2.5rem] bg-gradient-to-br from-[#0EA5E9] via-[#38BDF8] to-[#80B687] opacity-30 blur-2xl" />
 
-          {error && (
-            <div className="mb-4 text-sm text-red-200 bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2">
-              Incorrect email or password.
-            </div>
-          )}
-
-          <form action={loginAction} className="space-y-4">
-            <input type="hidden" name="next" value={next || "/dashboard"} />
-            <div>
-              <label className="block text-xs font-semibold text-white/50 mb-1">Email</label>
-              <input
-                type="email"
-                name="email"
-                required
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#38BDF8]/40 focus:border-[#38BDF8]/60 transition-shadow"
+          <div className="relative bg-white/10 backdrop-blur-2xl border border-white/20 rounded-[2.5rem] pt-16 pb-9 px-8 shadow-2xl">
+            {/* Logo badge, overlapping the top edge like an avatar */}
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full bg-white/10 backdrop-blur-xl border border-white/30 shadow-lg flex items-center justify-center p-4">
+              <Image
+                src="/dastrup-icon-color.png"
+                alt="Dastrup Deep Cleaning"
+                width={90}
+                height={125}
+                className="w-full h-full object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
               />
             </div>
-            <div>
-              <label className="block text-xs font-semibold text-white/50 mb-1">Password</label>
-              <input
-                type="password"
-                name="password"
-                required
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#38BDF8]/40 focus:border-[#38BDF8]/60 transition-shadow"
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full flex items-center justify-center gap-2 bg-[#0EA5E9] hover:bg-[#38BDF8] hover:shadow-[0_0_24px_-2px_rgba(56,189,248,0.6)] text-white text-sm font-semibold rounded-lg py-2.5 transition-all"
+
+            <h1
+              className={`${inter.className} text-2xl font-extrabold tracking-tight text-center mb-7 bg-gradient-to-r from-[#0EA5E9] to-[#38BDF8] bg-clip-text text-transparent`}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="4.5" y="10.5" width="15" height="9" rx="1.5" />
-                <path d="M8 10.5V7a4 4 0 0 1 8 0v3.5" />
-              </svg>
-              Log In
-            </button>
-          </form>
+              Portal
+            </h1>
+
+            {error && (
+              <div className="mb-5 text-sm text-red-200 bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2">
+                Incorrect email or password.
+              </div>
+            )}
+
+            <form action={loginAction} className="space-y-7">
+              <input type="hidden" name="next" value={next || "/dashboard"} />
+
+              <div className="relative flex items-center gap-2.5 border-b border-white/25 focus-within:border-[#38BDF8] pb-2 transition-colors">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="text-white/50 shrink-0">
+                  <path d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                </svg>
+                <label htmlFor="email" className="sr-only">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="Email"
+                  className="w-full bg-transparent text-sm text-white placeholder-white/40 focus:outline-none"
+                />
+              </div>
+
+              <div className="relative flex items-center gap-2.5 border-b border-white/25 focus-within:border-[#38BDF8] pb-2 transition-colors">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="text-white/50 shrink-0">
+                  <rect x="4.5" y="10.5" width="15" height="9" rx="1.5" />
+                  <path d="M8 10.5V7a4 4 0 0 1 8 0v3.5" />
+                </svg>
+                <label htmlFor="password" className="sr-only">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  required
+                  placeholder="Password"
+                  className="w-full bg-transparent text-sm text-white placeholder-white/40 focus:outline-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full rounded-full bg-gradient-to-r from-[#0EA5E9] to-[#38BDF8] hover:shadow-[0_0_30px_-4px_rgba(56,189,248,0.65)] text-white text-sm font-semibold tracking-wide py-3 transition-shadow"
+              >
+                LOG IN
+              </button>
+            </form>
+          </div>
         </div>
 
-        <p className="mt-8 text-xs text-white/30">Dastrup Deep Cleaning · Utah&apos;s Trusted Cleaning Experts</p>
+        <p className="mt-10 text-xs text-white/30">Dastrup Deep Cleaning · Utah&apos;s Trusted Cleaning Experts</p>
       </div>
     </div>
   );

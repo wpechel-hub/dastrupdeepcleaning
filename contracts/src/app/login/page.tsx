@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import { loginAction } from "./actions";
 
 const inter = Inter({ subsets: ["latin"], weight: ["800"] });
-const playfair = Playfair_Display({ subsets: ["latin"], weight: ["600"], style: ["italic"] });
+const fraunces = Fraunces({ subsets: ["latin"], weight: "variable", style: ["italic"], axes: ["opsz", "SOFT"] });
 
 export default async function LoginPage({
   searchParams,
@@ -19,7 +19,7 @@ export default async function LoginPage({
       <div className="pointer-events-none absolute -bottom-40 -right-40 w-[32rem] h-[32rem] rounded-full bg-[#38BDF8]/10 blur-[120px]" />
 
       {/* Tagline, bottom-left of the page */}
-      <p className={`${playfair.className} absolute left-6 sm:left-10 bottom-8 sm:bottom-12 italic text-4xl sm:text-5xl tracking-tight max-w-xs sm:max-w-sm leading-[1.15] bg-gradient-to-r from-[#0EA5E9] to-[#38BDF8] bg-clip-text text-transparent`}>
+      <p className={`${fraunces.className} absolute left-6 sm:left-10 bottom-8 sm:bottom-12 italic font-medium text-4xl sm:text-5xl tracking-tight max-w-xs sm:max-w-sm leading-[1.15] bg-gradient-to-r from-[#0EA5E9] to-[#38BDF8] bg-clip-text text-transparent`}>
         We make clean happen
       </p>
 

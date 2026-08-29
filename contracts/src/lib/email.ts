@@ -56,6 +56,50 @@ export async function sendContractEmail(opts: {
   return { sent: true as const };
 }
 
+export async function sendPasswordResetEmail(opts: {
+  to: string;
+  name: string;
+  resetUrl: string;
+}) {
+  const transport = getTransport();
+  if (!transport) {
+    console.warn(
+      "[email] GMAIL_USER / GMAIL_APP_PASSWORD not configured — skipping send. Share this link manually:",
+      opts.resetUrl
+    );
+    return { sent: false as const };
+  }
+
+  const from = process.env.GMAIL_USER!;
+
+  await transport.sendMail({
+    from: `"Dastrup Deep Cleaning" <${from}>`,
+    to: opts.to,
+    subject: `Reset your Portal password — Dastrup Deep Cleaning`,
+    text: `Hi ${opts.name},\n\nWe received a request to reset your Portal password. Use the link below to choose a new one (expires in 1 hour):\n\n${opts.resetUrl}\n\nIf you didn't request this, you can safely ignore this email — your password will stay the same.\n\n— Dastrup Deep Cleaning`,
+    html: `
+      <div style="font-family: -apple-system, sans-serif; max-width: 480px; margin: 0 auto; color:#1b1f27;">
+        <h2 style="color:#1B4B7A; margin-bottom:4px;">Dastrup Deep Cleaning</h2>
+        <p style="color:#666; font-style:italic; margin-top:0;">Utah's Trusted Cleaning Experts</p>
+        <p>Hi ${opts.name},</p>
+        <p>We received a request to reset your Portal password. Click below to choose a new one — this link expires in 1 hour.</p>
+        <p style="text-align:center; margin: 28px 0;">
+          <a href="${opts.resetUrl}" style="background:#1B4B7A; color:#fff; padding:12px 22px; border-radius:8px; text-decoration:none; font-weight:600;">
+            Reset Password
+          </a>
+        </p>
+        <p style="font-size:13px; color:#666;">If the button doesn't work, copy and paste this link into your browser:<br>${opts.resetUrl}</p>
+        <p style="font-size:13px; color:#666;">If you didn't request this, you can safely ignore this email — your password will stay the same.</p>
+        <p style="color:#666; font-size:13px; margin-top:32px; border-top:1px solid #e2e6ec; padding-top:12px;">
+          Dastrup Deep Cleaning · (801) 207-9056 · dastrupdeepcleaning@gmail.com
+        </p>
+      </div>
+    `,
+  });
+
+  return { sent: true as const };
+}
+
 export async function sendSignedCopyEmail(opts: {
   to: string;
   recipientLabel: string; // e.g. the client's name, or "Dastrup Deep Cleaning"

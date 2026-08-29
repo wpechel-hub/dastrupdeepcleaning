@@ -1,15 +1,16 @@
 import Image from "next/image";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import { loginAction } from "./actions";
 
 const inter = Inter({ subsets: ["latin"], weight: ["800"] });
+const playfair = Playfair_Display({ subsets: ["latin"], weight: ["600"], style: ["italic"] });
 
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; next?: string }>;
+  searchParams: Promise<{ error?: string; next?: string; reset?: string }>;
 }) {
-  const { error, next } = await searchParams;
+  const { error, next, reset } = await searchParams;
 
   return (
     <div className="relative min-h-screen overflow-hidden flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 bg-[#060C18] px-4 py-12">
@@ -18,7 +19,7 @@ export default async function LoginPage({
       <div className="pointer-events-none absolute -bottom-40 -right-40 w-[32rem] h-[32rem] rounded-full bg-[#38BDF8]/10 blur-[120px]" />
 
       {/* Tagline, bottom-left of the page */}
-      <p className={`${inter.className} absolute left-6 sm:left-10 bottom-8 sm:bottom-12 italic text-4xl sm:text-5xl font-extrabold tracking-tight max-w-xs sm:max-w-sm leading-[1.1] bg-gradient-to-r from-[#0EA5E9] to-[#38BDF8] bg-clip-text text-transparent`}>
+      <p className={`${playfair.className} absolute left-6 sm:left-10 bottom-8 sm:bottom-12 italic text-4xl sm:text-5xl tracking-tight max-w-xs sm:max-w-sm leading-[1.15] bg-gradient-to-r from-[#0EA5E9] to-[#38BDF8] bg-clip-text text-transparent`}>
         We make clean happen
       </p>
 
@@ -27,7 +28,7 @@ export default async function LoginPage({
           {/* Colorful glow directly behind the card, in the site's palette */}
           <div className="absolute inset-4 -z-10 rounded-[2.5rem] bg-gradient-to-br from-[#0EA5E9] via-[#38BDF8] to-[#80B687] opacity-30 blur-2xl" />
 
-          <div className="relative bg-white/10 backdrop-blur-2xl border border-white/20 rounded-[2.5rem] pt-16 pb-9 px-8 shadow-2xl">
+          <div className="relative bg-white/10 backdrop-blur-2xl border border-white/20 rounded-[2.5rem] pt-20 pb-9 px-8 shadow-2xl">
             {/* Logo badge, overlapping the top edge like an avatar */}
             <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full bg-white/10 backdrop-blur-xl border border-white/30 shadow-lg flex items-center justify-center p-4">
               <Image
@@ -39,15 +40,14 @@ export default async function LoginPage({
               />
             </div>
 
-            <h1
-              className={`${inter.className} text-2xl font-extrabold tracking-tight text-center mb-7 bg-gradient-to-r from-[#0EA5E9] to-[#38BDF8] bg-clip-text text-transparent`}
-            >
-              Portal
-            </h1>
-
             {error && (
               <div className="mb-5 text-sm text-red-200 bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2">
                 Incorrect email or password.
+              </div>
+            )}
+            {reset && (
+              <div className="mb-5 text-sm text-emerald-200 bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-2">
+                Password updated. You can log in now.
               </div>
             )}
 
@@ -64,6 +64,7 @@ export default async function LoginPage({
                   type="email"
                   name="email"
                   required
+                  autoComplete="email"
                   placeholder="Email"
                   className="w-full bg-transparent text-sm text-white placeholder-white/40 focus:outline-none"
                 />
@@ -80,9 +81,16 @@ export default async function LoginPage({
                   type="password"
                   name="password"
                   required
+                  autoComplete="current-password"
                   placeholder="Password"
                   className="w-full bg-transparent text-sm text-white placeholder-white/40 focus:outline-none"
                 />
+              </div>
+
+              <div className="-mt-4 text-right">
+                <a href="/login/forgot" className="text-xs text-white/50 hover:text-[#38BDF8] transition-colors">
+                  Forgot password?
+                </a>
               </div>
 
               <button

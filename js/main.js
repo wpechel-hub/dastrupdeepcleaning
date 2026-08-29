@@ -3,9 +3,21 @@
 // Enable CSS animations (progressive enhancement)
 document.documentElement.classList.add('js');
 
-// Nav solid on scroll
+// Nav solid + hide-on-scroll-down / show-on-scroll-up
 const nav = document.getElementById('nav');
-const solidify = () => nav.classList.toggle('nav--solid', window.scrollY > 30);
+let lastScrollY = window.scrollY;
+const solidify = () => {
+  const y = window.scrollY;
+  nav.classList.toggle('nav--solid', y > 30);
+  // Only start hiding once we've scrolled past the nav's own height,
+  // and only while actively scrolling down. Any upward scroll reveals it.
+  if (y > lastScrollY && y > nav.offsetHeight) {
+    nav.classList.add('nav--hidden');
+  } else {
+    nav.classList.remove('nav--hidden');
+  }
+  lastScrollY = y;
+};
 window.addEventListener('scroll', solidify, { passive: true });
 solidify();
 
@@ -169,3 +181,47 @@ if (form && btn) {
     }
   });
 }
+
+// Dynamic quote-form questions based on selected service
+(function () {
+  const serviceSelect = document.getElementById('service');
+  if (!serviceSelect) return;
+
+  const groupByService = {
+    'Regular Cleaning': 'extra-residential',
+    'Deep Cleaning': 'extra-residential',
+    'Move In / Move Out': 'extra-residential',
+    'Post-Construction': 'extra-residential',
+    'Vacation Rental Cleaning': 'extra-vacation',
+    'Office': 'extra-commercial',
+    'Medical / Dental': 'extra-commercial',
+    'Retail': 'extra-commercial',
+    'Restaurant': 'extra-commercial',
+    'Bank': 'extra-commercial',
+    'Salon / Spa': 'extra-commercial',
+    'Fitness / Gym': 'extra-commercial',
+    'School / Daycare': 'extra-commercial',
+    'Apartments / HOA': 'extra-commercial',
+    'Property Management': 'extra-commercial',
+    'Warehouse': 'extra-commercial',
+  };
+
+  const allGroupIds = new Set(Object.values(groupByService));
+
+  function updateExtraFields() {
+    const targetId = groupByService[serviceSelect.value];
+    allGroupIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.hidden = id !== targetId;
+    });
+  }
+
+  serviceSelect.addEventListener('change', updateExtraFields);
+  updateExtraFields();
+
+  const form = document.getElementById('contactForm');
+  if (form) {
+    form.addEventListener('reset', () => setTimeout(updateExtraFields, 0));
+  }
+})();

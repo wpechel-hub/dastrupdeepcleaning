@@ -67,7 +67,6 @@
         <li><a href="index.html#reviews" class="nav__link">Reviews</a></li>
         <li><a href="faq.html" class="nav__link">FAQ</a></li>
         <li><a href="careers.html" class="nav__link">Careers</a></li>
-        <li><a href="/login" class="nav__link">Login</a></li>
         <li><a href="contact.html" class="btn btn--accent btn--sm">Free Quote</a></li>
       </ul>
       <button class="nav__hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
@@ -81,7 +80,7 @@
     <!-- PAGE HEADER -->
     <section class="page-header">
       <div class="container">
-        <img src="https://static.wixstatic.com/media/ad5f94_4997b641a50b4f60b8d0787ab0569a8b~mv2.png"
+        <img src="images/dastrup-footer-logo-gray.png"
              alt="Dastrup Deep Cleaning" class="page-header__logo reveal-up">
         <div class="section-label reveal-up">Get in Touch</div>
         <h1 class="reveal-up">Request Your<br><em>Free Quote</em></h1>
@@ -122,30 +121,405 @@
               <label for="service">Service Needed</label>
               <select id="service" name="service" required>
                 <option value="" disabled selected>Select a service…</option>
-                <option>Janitorial Services</option>
-                <option>Residential Cleaning</option>
-                <option>Deep Cleaning</option>
-                <option>Move In / Move Out</option>
-                <option>Commercial Cleaning</option>
-                <option>Post-Construction</option>
-                <option>Vacation Rental Cleaning</option>
-                <option>Sanitization Cleaning</option>
-                <option>Model Home Cleaning</option>
-                <option>Bank Cleaning Services</option>
-                <option>Auto Dealership Cleaning</option>
-                <option>School Cleaning</option>
-                <option>Gym Cleaning Services</option>
-                <option>Retail Store Cleaning</option>
+                <optgroup label="Residential">
+                  <option>Regular Cleaning</option>
+                  <option>Deep Cleaning</option>
+                  <option>Move In / Move Out</option>
+                  <option>Post-Construction</option>
+                </optgroup>
+                <optgroup label="Vacation Rental">
+                  <option>Vacation Rental Cleaning</option>
+                </optgroup>
+                <optgroup label="Commercial">
+                  <option>Office</option>
+                  <option>Medical / Dental</option>
+                  <option>Retail</option>
+                  <option>Restaurant</option>
+                  <option>Bank</option>
+                  <option>Salon / Spa</option>
+                  <option>Fitness / Gym</option>
+                  <option>School / Daycare</option>
+                  <option>Apartments / HOA</option>
+                  <option>Property Management</option>
+                  <option>Warehouse</option>
+                </optgroup>
                 <option>Not Sure — Help Me Choose</option>
               </select>
             </div>
+            <!-- DYNAMIC SERVICE QUESTIONS -->
+            <div class="form-extra" id="extra-vacation" hidden>
+              <p class="form-extra__label">A few quick questions about your vacation rental</p>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="vr_type">Property Type *</label>
+                  <select id="vr_type" name="Property Type" required>
+                    <option value="" disabled selected>Select…</option>
+                    <option>House</option>
+                    <option>Condo</option>
+                    <option>Townhome</option>
+                    <option>Cabin</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="vr_listing">Property Listing Link</label>
+                  <input type="url" id="vr_listing" name="Listing Link" placeholder="Airbnb, VRBO, etc.">
+                </div>
+              </div>
+
+              <p class="form-extra__subhead">Property Details</p>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="vr_sqft">Approximate Square Footage *</label>
+                  <input type="text" id="vr_sqft" name="Square Footage" placeholder="e.g. 2,000 sq ft" required>
+                </div>
+                <div class="form-group">
+                  <label for="vr_floors">Number of Floors</label>
+                  <input type="number" id="vr_floors" name="Number of Floors" min="0" placeholder="e.g. 2">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="vr_bedrooms">Number of Bedrooms *</label>
+                  <input type="number" id="vr_bedrooms" name="Bedrooms" min="0" placeholder="e.g. 3" required>
+                </div>
+                <div class="form-group">
+                  <label for="vr_bathrooms">Number of Bathrooms *</label>
+                  <input type="number" id="vr_bathrooms" name="Bathrooms" min="0" placeholder="e.g. 2" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="vr_beds">Number of Beds *</label>
+                  <input type="number" id="vr_beds" name="Number of Beds" min="0" placeholder="e.g. 4" required>
+                </div>
+                <div class="form-group">
+                  <label for="vr_hottub">Does the Property Have a Hot Tub?</label>
+                  <select id="vr_hottub" name="Hot Tub">
+                    <option value="" disabled selected>Select…</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="vr_pool">Does the Property Have a Pool?</label>
+                <select id="vr_pool" name="Pool">
+                  <option value="" disabled selected>Select…</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+
+              <p class="form-extra__subhead">Cleaning Service</p>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="vr_service">What Service Do You Need?</label>
+                  <select id="vr_service" name="Vacation Rental Service">
+                    <option value="" disabled selected>Select…</option>
+                    <option>Vacation Rental Turnover</option>
+                    <option>Deep Cleaning</option>
+                    <option>One-Time Cleaning</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="vr_howoften">How Often Will You Need Cleaning?</label>
+                  <select id="vr_howoften" name="Cleaning Frequency">
+                    <option value="" disabled selected>Select…</option>
+                    <option>After every guest</option>
+                    <option>Multiple times per week</option>
+                    <option>Weekly</option>
+                    <option>As needed</option>
+                  </select>
+                </div>
+              </div>
+
+              <p class="form-extra__subhead">Turnover Information</p>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="vr_sameday">Do You Have Same-Day Turnover?</label>
+                  <select id="vr_sameday" name="Same-Day Turnover">
+                    <option value="" disabled selected>Select…</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>Sometimes</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="vr_guestcontact">Would You Like Us to Be the Guest Contact?</label>
+                  <select id="vr_guestcontact" name="Guest Contact">
+                    <option value="" disabled selected>Select…</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="vr_checkout">Typical Check-Out Time</label>
+                  <input type="time" id="vr_checkout" name="Check-Out Time">
+                </div>
+                <div class="form-group">
+                  <label for="vr_checkin">Typical Check-In Time</label>
+                  <input type="time" id="vr_checkin" name="Check-In Time">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="vr_linenservice">Do You Need Linen/Towel Service?</label>
+                  <select id="vr_linenservice" name="Linen Towel Service">
+                    <option value="" disabled selected>Select…</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="vr_bedsmade">Do You Need Beds Made?</label>
+                  <select id="vr_bedsmade" name="Beds Made">
+                    <option value="" disabled selected>Select…</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="vr_restock">Do You Need Restocking of Supplies?</label>
+                <select id="vr_restock" name="Restocking">
+                  <option value="" disabled selected>Select…</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+
+              <p class="form-extra__subhead">Additional Services</p>
+              <div class="form-checklist">
+                <label class="form-checklist__item"><input type="checkbox" name="Additional Services[]" value="Laundry"> Laundry</label>
+                <label class="form-checklist__item"><input type="checkbox" name="Additional Services[]" value="Linen change"> Linen change</label>
+                <label class="form-checklist__item"><input type="checkbox" name="Additional Services[]" value="Restocking"> Restocking</label>
+                <label class="form-checklist__item"><input type="checkbox" name="Additional Services[]" value="Inside refrigerator"> Inside refrigerator</label>
+                <label class="form-checklist__item"><input type="checkbox" name="Additional Services[]" value="Inside oven"> Inside oven</label>
+                <label class="form-checklist__item"><input type="checkbox" name="Additional Services[]" value="Windows"> Windows</label>
+                <label class="form-checklist__item"><input type="checkbox" name="Additional Services[]" value="Hot tub cleaning"> Hot tub cleaning</label>
+                <label class="form-checklist__item"><input type="checkbox" name="Additional Services[]" value="Other"> Other</label>
+              </div>
+            </div>
+
+            <div class="form-extra" id="extra-residential" hidden>
+              <p class="form-extra__label">A few quick questions about your home</p>
+
+              <p class="form-extra__subhead">Home Details</p>
+              <div class="form-group">
+                <label for="res_hometype">What Type of Home Is It? *</label>
+                <select id="res_hometype" name="Home Type" required>
+                  <option value="" disabled selected>Select…</option>
+                  <option>House</option>
+                  <option>Townhome</option>
+                  <option>Condo/Apartment</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="res_sqft">Approximate Square Footage *</label>
+                  <input type="text" id="res_sqft" name="Square Footage" placeholder="e.g. 2,000 sq ft" required>
+                </div>
+                <div class="form-group">
+                  <label for="res_floors">Number of Floors</label>
+                  <input type="number" id="res_floors" name="Number of Floors" min="0" placeholder="e.g. 2">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="res_bedrooms">Number of Bedrooms *</label>
+                  <input type="number" id="res_bedrooms" name="Bedrooms" min="0" placeholder="e.g. 3" required>
+                </div>
+                <div class="form-group">
+                  <label for="res_bathrooms">Number of Bathrooms *</label>
+                  <input type="number" id="res_bathrooms" name="Bathrooms" min="0" placeholder="e.g. 2" required>
+                </div>
+              </div>
+
+              <p class="form-extra__subhead">Cleaning Service</p>
+              <div class="form-group">
+                <label for="res_type">What Type of Cleaning Are You Looking For? *</label>
+                <select id="res_type" name="Type of Cleaning" required>
+                  <option value="" disabled selected>Select…</option>
+                  <option>Standard Cleaning</option>
+                  <option>Deep Cleaning</option>
+                  <option>Move-In Cleaning</option>
+                  <option>Move-Out Cleaning</option>
+                  <option>Post-Construction Cleaning</option>
+                  <option>One-Time Cleaning</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="res_frequency">How Often Would You Like Cleaning?</label>
+                <select id="res_frequency" name="Preferred Frequency">
+                  <option value="" disabled selected>Select…</option>
+                  <option>Weekly</option>
+                  <option>Every 2 weeks</option>
+                  <option>Every 4 weeks</option>
+                  <option>One-time</option>
+                  <option>Not sure</option>
+                </select>
+              </div>
+
+              <p class="form-extra__subhead">Your Cleaning Needs</p>
+              <div class="form-group">
+                <label>Which Areas Would You Like Us to Focus On?</label>
+                <div class="form-checklist">
+                  <label class="form-checklist__item"><input type="checkbox" name="Focus Areas[]" value="Kitchen"> Kitchen</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="Focus Areas[]" value="Bathrooms"> Bathrooms</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="Focus Areas[]" value="Bedrooms"> Bedrooms</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="Focus Areas[]" value="Living areas"> Living areas</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="Focus Areas[]" value="Floors"> Floors</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="Focus Areas[]" value="Dusting"> Dusting</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="Focus Areas[]" value="Baseboards"> Baseboards</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="Focus Areas[]" value="Inside appliances"> Inside appliances</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="Focus Areas[]" value="Windows"> Windows</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="Focus Areas[]" value="Other"> Other</label>
+                </div>
+              </div>
+
+              <p class="form-extra__subhead">Pets</p>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="res_pets">Do You Have Pets?</label>
+                  <select id="res_pets" name="Has Pets">
+                    <option value="" disabled selected>Select…</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="res_pettype">If Yes, What Type?</label>
+                  <input type="text" id="res_pettype" name="Pet Type" placeholder="e.g. 1 dog, 2 cats">
+                </div>
+              </div>
+
+              <p class="form-extra__subhead">Schedule</p>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="res_days">Preferred Cleaning Day(s)</label>
+                  <input type="text" id="res_days" name="Preferred Days" placeholder="e.g. Tuesdays">
+                </div>
+                <div class="form-group">
+                  <label for="res_time">Preferred Time</label>
+                  <input type="text" id="res_time" name="Preferred Time" placeholder="e.g. Mornings">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="res_start">When Would You Like to Start?</label>
+                <input type="date" id="res_start" name="Start Date">
+              </div>
+            </div>
+
+            <div class="form-extra" id="extra-commercial" hidden>
+              <p class="form-extra__label">A few quick questions about your space</p>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="cm_sqft">Approximate Square Footage</label>
+                  <input type="text" id="cm_sqft" name="Square Footage" placeholder="e.g. 5,000 sq ft">
+                </div>
+                <div class="form-group">
+                  <label for="cm_floors">Number of Floors</label>
+                  <input type="number" id="cm_floors" name="Number of Floors" min="0" placeholder="e.g. 2">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="cm_shared">Is the Building Shared with Other Businesses?</label>
+                  <select id="cm_shared" name="Shared Building">
+                    <option value="" disabled selected>Select…</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="cm_elevator">Is There an Elevator?</label>
+                  <select id="cm_elevator" name="Elevator">
+                    <option value="" disabled selected>Select…</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="cm_rooms">Rooms / Offices</label>
+                  <input type="number" id="cm_rooms" name="Rooms" min="0" placeholder="e.g. 10">
+                </div>
+                <div class="form-group">
+                  <label for="cm_bathrooms">Restrooms</label>
+                  <input type="number" id="cm_bathrooms" name="Restrooms" min="0" placeholder="e.g. 4">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="cm_kitchen">Kitchen or Break Room?</label>
+                  <select id="cm_kitchen" name="Kitchen or Break Room">
+                    <option value="" disabled selected>Select…</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="cm_common">Common Areas?</label>
+                  <select id="cm_common" name="Common Areas">
+                    <option value="" disabled selected>Select…</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="cm_stairs">Are There Stairs?</label>
+                  <select id="cm_stairs" name="Stairs">
+                    <option value="" disabled selected>Select…</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="cm_frequency">Preferred Frequency</label>
+                  <select id="cm_frequency" name="Preferred Frequency">
+                    <option value="" disabled selected>Select…</option>
+                    <option>One-Time</option>
+                    <option>Daily</option>
+                    <option>Weekly</option>
+                    <option>Bi-Weekly</option>
+                    <option>Monthly</option>
+                    <option>Custom Schedule</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>What Cleaning Tasks Do You Need?</label>
+                <div class="form-checklist">
+                  <label class="form-checklist__item"><input type="checkbox" name="General Cleaning[]" value="Vacuuming"> Vacuuming</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="General Cleaning[]" value="Mopping"> Mopping</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="General Cleaning[]" value="Dusting"> Dusting</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="General Cleaning[]" value="Trash removal"> Trash removal</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="General Cleaning[]" value="Surface cleaning"> Surface cleaning</label>
+                  <label class="form-checklist__item"><input type="checkbox" name="General Cleaning[]" value="Disinfecting"> Disinfecting</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cm_time">What Days and Times Would You Prefer Cleaning to Take Place?</label>
+                <input type="text" id="cm_time" name="Preferred Days and Times" placeholder="e.g. Weeknights after 6pm, or Saturday mornings">
+              </div>
+            </div>
+
             <div class="form-group">
               <label for="date">Preferred Date (optional)</label>
               <input type="date" id="date" name="date">
             </div>
             <div class="form-group">
-              <label for="message">Tell Us About Your Space</label>
-              <textarea id="message" name="message" placeholder="Square footage, number of rooms, any special requests or areas of concern…"></textarea>
+              <label for="message">Anything Else You'd Like Us to Know?</label>
+              <textarea id="message" name="message" placeholder="Anything not covered above — special requests, areas of concern, access instructions, etc."></textarea>
             </div>
             <button type="submit" class="btn btn--accent btn--lg btn--full" id="submitBtn">
               Send My Request
@@ -232,7 +606,7 @@
   <footer class="footer">
     <div class="container footer__grid">
       <div class="footer__brand">
-        <a href="index.html"><img src="https://static.wixstatic.com/media/ad5f94_4997b641a50b4f60b8d0787ab0569a8b~mv2.png" alt="Dastrup Deep Cleaning" class="footer__logo"></a>
+        <a href="index.html"><img src="images/dastrup-footer-logo-gray.png" alt="Dastrup Deep Cleaning" class="footer__logo"></a>
         <p class="footer__tagline">Utah's Trusted Cleaning Experts</p>
         <p>Professional cleaning for homes and businesses across Utah.</p>
         <div class="footer__social-row">

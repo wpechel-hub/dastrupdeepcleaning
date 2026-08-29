@@ -17,19 +17,26 @@ export default async function LoginPage({
       <div className="pointer-events-none absolute -top-40 -left-40 w-[32rem] h-[32rem] rounded-full bg-[#0EA5E9]/20 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-40 -right-40 w-[32rem] h-[32rem] rounded-full bg-[#38BDF8]/10 blur-[120px]" />
 
-      <div className="relative flex flex-col items-center md:items-start text-center md:text-left animate-fade-in-up">
+      <div className="relative flex items-end gap-2.5 animate-fade-in-up">
         <Image
-          src="/dastrup-logo-color.png"
+          src="/dastrup-icon-color.png"
           alt="Dastrup Deep Cleaning"
-          width={220}
-          height={178}
+          width={90}
+          height={125}
           priority
-          className="w-40 sm:w-48 h-auto drop-shadow-[0_0_30px_rgba(14,165,233,0.25)]"
+          className="w-16 sm:w-20 h-auto"
         />
-        <p className="mt-6 italic text-2xl sm:text-3xl text-white/90 font-medium">
-          We make clean happen
-        </p>
+        <div className="flex flex-col border-l-[3px] border-[#80B687] pl-2.5 pb-1.5 leading-none">
+          <span className="text-white text-sm sm:text-base font-bold tracking-[0.08em]">DASTRUP</span>
+          <span className="text-white text-sm sm:text-base font-bold tracking-[0.08em]">DEEP</span>
+          <span className="text-white text-sm sm:text-base font-bold tracking-[0.08em]">CLEANING</span>
+        </div>
       </div>
+
+      {/* Tagline, bottom-left of the page */}
+      <p className="absolute left-6 sm:left-10 bottom-6 sm:bottom-8 italic text-lg sm:text-xl text-white/60 font-medium">
+        We make clean happen
+      </p>
 
       <div className="relative flex flex-col items-center animate-fade-in-up [animation-delay:120ms]">
         <div className="w-full max-w-sm bg-[#0C1C34]/90 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-[0_0_60px_-12px_rgba(14,165,233,0.35)] ring-1 ring-white/5">

@@ -1139,6 +1139,7 @@ input, select, textarea { font-family: inherit; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px 16px;
+  margin-bottom: 18px;
 }
 .form-checklist__item {
   display: flex;

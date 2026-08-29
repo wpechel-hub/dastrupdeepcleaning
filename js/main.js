@@ -9,9 +9,9 @@ let lastScrollY = window.scrollY;
 const solidify = () => {
   const y = window.scrollY;
   nav.classList.toggle('nav--solid', y > 30);
-  // Only start hiding once we've scrolled past the nav's own height,
-  // and only while actively scrolling down. Any upward scroll reveals it.
-  if (y > lastScrollY && y > nav.offsetHeight) {
+  // Hide as soon as the user scrolls down at all (past a tiny threshold
+  // so it doesn't flicker at the very top). Any upward scroll reveals it.
+  if (y > lastScrollY && y > 20) {
     nav.classList.add('nav--hidden');
   } else {
     nav.classList.remove('nav--hidden');

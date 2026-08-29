@@ -1151,8 +1151,14 @@ input, select, textarea { font-family: inherit; }
   cursor: pointer;
 }
 .form-checklist__item input {
+  appearance: auto;
+  -webkit-appearance: auto;
   width: 16px;
   height: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 0;
   accent-color: var(--accent);
   cursor: pointer;
   flex-shrink: 0;

@@ -17,24 +17,8 @@ export default async function LoginPage({
       <div className="pointer-events-none absolute -top-40 -left-40 w-[32rem] h-[32rem] rounded-full bg-[#0EA5E9]/20 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-40 -right-40 w-[32rem] h-[32rem] rounded-full bg-[#38BDF8]/10 blur-[120px]" />
 
-      <div className="relative flex items-end gap-2.5 animate-fade-in-up">
-        <Image
-          src="/dastrup-icon-color.png"
-          alt="Dastrup Deep Cleaning"
-          width={90}
-          height={125}
-          priority
-          className="w-16 sm:w-20 h-auto"
-        />
-        <div className="flex flex-col border-l-[3px] border-[#80B687] pl-2.5 pb-1.5 leading-none">
-          <span className="text-white text-sm sm:text-base font-bold tracking-[0.08em]">DASTRUP</span>
-          <span className="text-white text-sm sm:text-base font-bold tracking-[0.08em]">DEEP</span>
-          <span className="text-white text-sm sm:text-base font-bold tracking-[0.08em]">CLEANING</span>
-        </div>
-      </div>
-
       {/* Tagline, bottom-left of the page */}
-      <p className="absolute left-6 sm:left-10 bottom-6 sm:bottom-8 italic text-lg sm:text-xl text-white/60 font-medium">
+      <p className={`${inter.className} absolute left-6 sm:left-10 bottom-8 sm:bottom-12 italic text-4xl sm:text-5xl font-extrabold tracking-tight max-w-xs sm:max-w-sm leading-[1.1] bg-gradient-to-r from-[#0EA5E9] to-[#38BDF8] bg-clip-text text-transparent`}>
         We make clean happen
       </p>
 

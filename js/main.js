@@ -149,6 +149,13 @@ const btn  = document.getElementById('submitBtn');
 if (form && btn) {
   form.addEventListener('submit', async e => {
     e.preventDefault();
+
+    // The form uses novalidate (so we control the error UI), which means
+    // required fields aren't enforced automatically — check them here.
+    // Fields inside a hidden .form-extra group are correctly skipped by
+    // the browser since they're not rendered.
+    if (!form.reportValidity()) return;
+
     btn.disabled = true;
     btn.innerHTML = `Sending…`;
 
